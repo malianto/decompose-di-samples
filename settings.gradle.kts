@@ -13,11 +13,10 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "decompose-dagger-sample"
+rootProject.name = "decompose-metro-sample"
 
 include(":app-android")
 include(":repository")
-include(":utils")
 include(":feature-root")
 include(":feature-list")
 include(":feature-details")

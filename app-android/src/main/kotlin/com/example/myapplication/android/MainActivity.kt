@@ -12,13 +12,14 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.defaultComponentContext
 import com.example.myapplication.root.RootContent
+import dev.zacsweers.metro.createGraph
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val component = DaggerAppDaggerComponent.create().rootComponentFactory(defaultComponentContext())
+        val component = createGraph<AppGraph>().rootComponentFactory(defaultComponentContext())
 
         setContent {
             MaterialTheme {

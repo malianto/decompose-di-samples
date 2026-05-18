@@ -2,10 +2,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.android.application)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.anvil)
+    alias(libs.plugins.metro)
 }
 
 android {
@@ -36,10 +34,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+}
 
-    kotlinOptions {
-        jvmTarget = libs.versions.jvmTarget.get()
-    }
+kotlin {
+    jvmToolchain(jdkVersion = libs.versions.jvmTarget.get().toInt())
 }
 
 dependencies {
@@ -47,19 +45,10 @@ dependencies {
     implementation(project(":feature-root"))
     implementation(project(":feature-list"))
     implementation(project(":feature-details"))
-    implementation(project(":utils"))
     implementation(libs.androidx.activity.activityCompose)
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.material)
     implementation(libs.decompose.decompose)
     implementation(libs.decompose.extensionsCompose)
-    implementation(libs.dagger.dagger)
-    kapt(libs.dagger.daggerCompiler)
-    implementation(libs.anvil.annotations)
-    implementation(libs.anvilUtils.annotations)
-}
-
-anvil {
-    useKsp(contributesAndFactoryGeneration = true)
-    generateDaggerFactories = true
 }

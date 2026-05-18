@@ -11,19 +11,19 @@ import com.example.myapplication.details.DetailsComponent
 import com.example.myapplication.list.ListComponent
 import com.example.myapplication.root.RootComponent.Child.DetailsChild
 import com.example.myapplication.root.RootComponent.Child.ListChild
-import com.example.myapplication.utils.AppScope
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
+import dev.zacsweers.metro.ContributesBinding
 import kotlinx.serialization.Serializable
-import me.gulya.anvil.assisted.ContributesAssistedFactory
 
-@ContributesAssistedFactory(AppScope::class, RootComponent.Factory::class)
-class DefaultRootComponent @AssistedInject constructor(
+@AssistedInject
+class DefaultRootComponent(
     private val listFactory: ListComponent.Factory,
     private val detailsFactory: DetailsComponent.Factory,
     @Assisted componentContext: ComponentContext,
 ) : RootComponent, ComponentContext by componentContext {
-
     private val nav = StackNavigation<Config>()
 
     override val stack: Value<ChildStack<*, RootComponent.Child>> =
@@ -61,5 +61,11 @@ class DefaultRootComponent @AssistedInject constructor(
 
         @Serializable
         data class Details(val itemId: String) : Config
+    }
+
+    @ContributesBinding(AppScope::class)
+    @AssistedFactory
+    fun interface Factory : RootComponent.Factory {
+        override fun invoke(componentContext: ComponentContext): DefaultRootComponent
     }
 }

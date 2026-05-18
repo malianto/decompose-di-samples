@@ -1,8 +1,7 @@
 plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.android.library)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.anvil)
+    alias(libs.plugins.metro)
 }
 
 android {
@@ -13,19 +12,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-
-    kotlinOptions {
-        jvmTarget = libs.versions.jvmTarget.get()
-    }
 }
 
-dependencies {
-    implementation(project(":utils"))
-    implementation(libs.dagger.dagger)
-    implementation(libs.anvil.annotations)
-}
-
-anvil {
-    useKsp(contributesAndFactoryGeneration = true)
-    generateDaggerFactories = true
+kotlin {
+    jvmToolchain(jdkVersion = libs.versions.jvmTarget.get().toInt())
 }

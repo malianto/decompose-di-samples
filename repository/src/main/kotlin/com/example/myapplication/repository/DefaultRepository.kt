@@ -1,13 +1,12 @@
 package com.example.myapplication.repository
 
-import com.example.myapplication.utils.AppScope
-import com.squareup.anvil.annotations.ContributesBinding
-import com.squareup.anvil.annotations.optional.SingleIn
-import javax.inject.Inject
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.SingleIn
 
 @SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)
-class DefaultRepository @Inject constructor() : Repository {
+class DefaultRepository : Repository {
 
     private val itemMap: Map<String, Item> =
         List(100) { index ->
